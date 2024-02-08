@@ -57,20 +57,21 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
     name = os.getenv('PERSONAL_DATA_DB_NAME')
     co = mysql.connector.connect(host=host, user=username,
-                                     password=password, database=name)
+                                 password=password, database=name)
     return co
 
 
 def main() -> None:
-    ''' '''
+    '''main function'''
     db = get_db()
     cursor = db.cursor()
     formatter = RedactingFormatter(fields=("email", "ssn", "password"))
-    cursor.execute("SELECT name, email, phone, ssn, password, ip, last_login, user_agent FROM users;")
+    cursor.execute("SELECT name, email, phone, ssn, password, ip, last_login, user_agent
+                   FROM users
+                   ")
     for i in cursor:
         RedactingFormatter(fields=(PII_FIELDS))
         print(formatter.format(i))
-
 
 
 if __name__ == '__main__':

@@ -52,10 +52,35 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     '''get_db function'''
-    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    username = os.getenv('PERSONAL_DATA_DB_USERNAME', "root")
     password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
     host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
     name = os.getenv('PERSONAL_DATA_DB_NAME')
+    print(username)
+    print(type(PII_FIELDS))
     co = mysql.connector.connect(host=host, port=3306, user=username,
                                  password=password, database=name)
     return co
+
+
+def main():
+    '''function that takes no arguments and returns nothing'''
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    headers = [column[0] for column in cursor.description]
+    all = cursor.fetchall()
+    data = []
+    for i in all:
+        for j in range(len(headers)):
+            data.append(f'{headers[j]}={i[j]}')
+        msg = ';'. join(data)
+        data = []
+        log_record = logging.LogRecord("user_data", logging.INFO, None, None,
+                                       msg, None, None)
+        formatter = RedactingFormatter(fields=list(PII_FIELDS))
+        print(formatter.format(log_record))
+
+
+if __name__ == '__main__':
+    main()

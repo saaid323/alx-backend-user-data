@@ -59,3 +59,19 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     co = mysql.connector.connect(host=host, user=username,
                                      password=password, database=name)
     return co
+
+
+def main() -> None:
+    ''' '''
+    db = get_db()
+    cursor = db.cursor()
+    formatter = RedactingFormatter(fields=("email", "ssn", "password"))
+    cursor.execute("SELECT name, email, phone, ssn, password, ip, last_login, user_agent FROM users;")
+    for i in cursor:
+        RedactingFormatter(fields=(PII_FIELDS))
+        print(formatter.format(i))
+
+
+
+if __name__ == '__main__':
+    main()

@@ -10,7 +10,7 @@ class Auth:
     def check_slash(self, path: str, excluded_paths: List[str]) -> bool:
         '''handles the slash'''
         for i in excluded_paths:
-            i = i[:-1] if i[-1] is '/i' or i[-1] is '*' else i
+            i = i[:-1] if i[-1] is '/' or i[-1] is '*' else i
             if i == path:
                 return False
         return True

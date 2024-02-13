@@ -11,7 +11,7 @@ class Auth:
         '''handles the slash'''
         for i in excluded_paths:
             i = i[:-1] if i[-1] is '/' or i[-1] is '*' else i
-            if i == path:
+            if i in path:
                 return False
         return True
 
@@ -20,7 +20,7 @@ class Auth:
         excluded_paths"""
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
-        path = path[:-1] if path[-1] is '/' or path[-1] is '*' else path
+        path = path[:-1] if path[-1] is '/' else path
         if self.check_slash(path, excluded_paths):
             return True
         return False

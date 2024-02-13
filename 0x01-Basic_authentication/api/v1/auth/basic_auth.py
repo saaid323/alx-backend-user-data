@@ -46,7 +46,8 @@ class BasicAuth(Auth):
             return (None, None)
         if ":" not in decoded_base64_authorization_header:
             return (None, None)
-        return tuple(decoded_base64_authorization_header.split(":"))
+        new = decoded_base64_authorization_header.replace(":", ' ', 1)
+        return tuple(new.split(" "))
 
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
@@ -68,8 +69,12 @@ class BasicAuth(Auth):
     def current_user(self, request=None) -> TypeVar('User'):
         """return current user"""
         header = self.authorization_header(request)
+        print(header)
         extract = self.extract_base64_authorization_header(header)
+        print(extract)
         decode = self.decode_base64_authorization_header(extract)
+        print(decode)
         user_credentials = self.extract_user_credentials(decode)
+        print(user_credentials[0], user_credentials[1])
         return self.user_object_from_credentials(user_credentials[0],
                                                  user_credentials[1])

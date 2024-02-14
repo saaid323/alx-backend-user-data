@@ -2,6 +2,7 @@
 """Module to manage the API authentication"""
 from flask import request
 from typing import List, TypeVar
+import os
 
 
 class Auth:
@@ -35,3 +36,10 @@ class Auth:
         """returns None"""
         if request is None:
             return None
+
+    def session_cookie(self, request=None):
+        """returns a cookie value from a request"""
+        if request is None:
+            return None
+        cookie = os.getenv('SESSION_NAME')
+        return request.cookies.get(cookie)

@@ -40,3 +40,4 @@ class SessionDBAuth(SessionExpAuth):
         if not s_id or len(s_id) <= 0:
             return None
         s_id[0].remove()
+        return True

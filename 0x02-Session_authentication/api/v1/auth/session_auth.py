@@ -19,7 +19,6 @@ class SessionAuth(Auth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """returns a User ID based on a Session ID"""
-        print('user id session', isinstance(session_id, str))
         if session_id is None or not isinstance(session_id, str):
             return None
         return self.user_id_by_session_id.get(session_id)
@@ -27,6 +26,16 @@ class SessionAuth(Auth):
     def current_user(self, request=None):
         """returns a User instance based on a cookie value"""
         cookie = self.session_cookie(request)
-        print(cookie)
-        print('Dic', self.user_id_by_session_id)
         return User.get(self.user_id_for_session_id(cookie))
+
+    def destroy_session(self, request=None):
+        """deletes session_id"""
+        if request is None:
+            return False
+        if self.session_cookie(request) is None:
+            return False
+        session_id = self.session_cookie(request)
+        if self.user_id_for_session_id(session_id) is None:
+            return False
+        del self.user_id_by_session_id[session_id]
+        return True

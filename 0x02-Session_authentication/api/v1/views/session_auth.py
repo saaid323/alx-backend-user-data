@@ -4,6 +4,7 @@ from api.v1.views import app_views
 from flask import jsonify, request
 from models.user import User
 import os
+from api.v1.app import auth
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
@@ -25,3 +26,11 @@ def login():
     out = jsonify(user_email[0].to_json())
     out.set_cookie(os.getenv('SESSION_NAME'), session_id)
     return out
+
+
+@app_views.route('auth_session/logout', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """logout method"""
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({})

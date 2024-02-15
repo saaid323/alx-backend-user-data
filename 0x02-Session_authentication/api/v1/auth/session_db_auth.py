@@ -22,7 +22,9 @@ class SessionDBAuth(SessionExpAuth):
     def user_id_for_session_id(self, session_id=None):
         """user_id_for_session_id method"""
         s_id = UserSession.search({"session_id": session_id})
-        if not s_id or len(s_id) <= 0:
+        if not s_id:
+            return None
+        if len(s_id) <= 0:
             return None
         created = s_id[0].created_at
         time = timedelta(seconds=self.session_duration) + created

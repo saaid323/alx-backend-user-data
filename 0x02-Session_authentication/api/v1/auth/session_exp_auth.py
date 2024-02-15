@@ -13,8 +13,6 @@ class SessionExpAuth(SessionAuth):
         """initialize"""
         super().__init__()
         self.session_duration = int(os.getenv('SESSION_DURATION', '0'))
-        if self.session_duration is None:
-            self.session_duration = 0
 
     def create_session(self, user_id=None):
         """create session id using user_id"""

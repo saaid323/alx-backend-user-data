@@ -38,6 +38,6 @@ class SessionDBAuth(SessionExpAuth):
             return None
         s_id = UserSession.search({'session_id': session_id})
         if not s_id or len(s_id) <= 0:
-            return None
+            return False
         s_id[0].remove()
-        return None
+        return True

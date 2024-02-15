@@ -12,6 +12,8 @@ class SessionDBAuth(SessionExpAuth):
     def create_session(self, user_id=None):
         """create_session method"""
         session_id = super().create_session(user_id)
+        if session_id is None:
+            return None
         dic = {"user_id": user_id, 'session_id': session_id}
         user_session = UserSession(**dic)
         user_session.save()

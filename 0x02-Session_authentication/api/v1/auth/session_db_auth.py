@@ -20,7 +20,12 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id=None):
         """user_id_for_session_id method"""
-        s_id = UserSession.search({"session_id": session_id})
+        if session_id is None:
+            return None
+        try:
+            s_id = UserSession.search({"session_id": session_id})
+        except KeyError:
+            return None
         if not s_id:
             return None
         if len(s_id) <= 0:

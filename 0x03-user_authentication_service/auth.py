@@ -75,7 +75,7 @@ class Auth:
 
     def destroy_session(self, user_id: int) -> None:
         '''destroy session'''
-        info = {'session_id': session_id}
+        info = {'id': session_id}
         try:
             user = self._db.find_user_by(**info)
         except (NoResultFound, InvalidRequestError):

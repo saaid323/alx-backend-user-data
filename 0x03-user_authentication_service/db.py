@@ -33,14 +33,17 @@ class DB:
 
     def add_user(self, email, hashed_password):
         '''add user to users table'''
-        user = User(email=email, hashed_password=hashed_password)
-        session = self._session
-        session.add(user)
-        session.commit()
+        try:
+            user = User(email=email, hashed_password=hashed_password)
+            session = self._session
+            session.add(user)
+            session.commit()
+        except:
+            user = None
         return user
 
     def find_user_by(self, **kwargs):
-        ''' '''
+        '''find user in users table'''
         session = self._session
         for k in kwargs.keys():
             if not hasattr(User, k):

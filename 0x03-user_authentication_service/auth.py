@@ -75,9 +75,6 @@ class Auth:
 
     def destroy_session(self, user_id: int) -> None:
         '''destroy session'''
-        info = {'id': session_id}
-        try:
-            user = self._db.find_user_by(**info)
-        except (NoResultFound, InvalidRequestError):
-            return None
-        setattr(user, 'id', None)
+        if user_id is None:
+            rreturn None
+        self._db.update_user(user_id, session_id=None)

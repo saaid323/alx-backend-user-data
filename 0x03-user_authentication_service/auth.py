@@ -47,7 +47,7 @@ class Auth:
             return True
         return False
 
-    def _generate_uuid():
+    def _generate_uuid(self) -> UUID:
         '''generate uuid'''
         uuid = uuid.uuid4()
         retrun uuid

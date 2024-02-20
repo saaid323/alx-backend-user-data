@@ -51,3 +51,13 @@ class Auth:
         if bcrypt.checkpw(password, user.hashed_password):
             return True
         return False
+
+    def create_session(self, email: str) -> str:
+        '''Creates session id'''
+        info = {'email': email}
+        try:
+            user = self._db.find_user_by(**info)
+        except (NoResultFound, InvalidRequestError):
+            return
+        setattr(user, 'session_id', _generate_uuid())
+        return user.session_id

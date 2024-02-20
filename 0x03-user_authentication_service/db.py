@@ -39,6 +39,7 @@ class DB:
             session.add(user)
             session.commit()
         except IntegrityError:
+            session.rollback()
             user = None
         return user
 

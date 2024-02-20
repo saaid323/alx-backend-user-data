@@ -43,7 +43,7 @@ class DB:
             user = None
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs: Dict) -> User:
         '''find user in users table'''
         session = self._session
         for k in kwargs.keys():

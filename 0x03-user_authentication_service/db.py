@@ -49,8 +49,8 @@ class DB:
         session = self._session
         for k in kwargs.keys():
             if not hasattr(User, k):
-                raise InvalidRequestError
+                raise InvalidRequestError()
         all = session.query(User).filter_by(**kwargs).first()
         if all is None:
-            raise NoResultFound
+            raise NoResultFound()
         return all

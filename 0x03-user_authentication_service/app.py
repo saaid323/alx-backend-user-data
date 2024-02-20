@@ -8,8 +8,7 @@ app = Flask(__name__)
 @app.route('/', strict_slashes=False, methods=['GET'])
 def index():
     '''index of the flask app'''
-    form = request.form.get('message')
-    return jsonify(form)
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == '__main__':

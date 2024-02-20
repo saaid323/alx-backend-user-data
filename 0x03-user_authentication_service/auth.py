@@ -79,5 +79,5 @@ class Auth:
         try:
             user = self._db.find_user_by(**info)
         except (NoResultFound, InvalidRequestError):
-            return
+            return None
         setattr(user, 'id', None)

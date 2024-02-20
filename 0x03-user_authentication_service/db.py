@@ -52,5 +52,17 @@ class DB:
                 raise InvalidRequestError()
         all = session.query(User).filter_by(**kwargs).first()
         if all is None:
-            raise NoResultFound()
+            raise NoResultFound("No result foun")
         return all
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        '''update user'''
+        dic_id = {'id': user_id}
+        user = self.find_user_by(**dic_id)
+        for k, v in kwargs.items():
+            if not hasattr(User, k):
+                raise ValueError
+            if hasattr(User, k):
+                print(k, v)
+                setattr(user, k, v)
+        return None

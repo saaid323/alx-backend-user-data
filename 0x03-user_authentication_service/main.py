@@ -19,6 +19,7 @@ print(user.id)
 
 try:
     my_db.update_user(user.id, hashed_password='NewPwd')
+    print(user.hashed_password)
     print("Password updated")
 except ValueError:
     print("Error")

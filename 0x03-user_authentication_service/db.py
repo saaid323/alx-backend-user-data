@@ -63,6 +63,6 @@ class DB:
             if not hasattr(User, k):
                 raise ValueError
             if hasattr(User, k):
-                print(k, v)
                 setattr(user, k, v)
+        self._session.commit()
         return None

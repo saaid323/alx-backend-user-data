@@ -97,6 +97,6 @@ class Auth:
             user = self._db.find_user_by(**info)
         except InvalidRequestError:
             raise ValueError
-        password =  _hash_password(password)
+        password = _hash_password(password)
         self._db.update_user(user.id, hashed_password=password)
         self._db.update_user(user.id, reset_token=None)

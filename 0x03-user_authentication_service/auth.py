@@ -94,8 +94,8 @@ class Auth:
         '''update password'''
         reset = {'reset_token': reset_roken}
         try:
-            user = self._db.find_user_by(**info)
-        except InvalidRequestError:
+            user = self._db.find_user_by(**reset)
+        except (NoResultFound, InvalidRequestError):
             raise ValueError
         password = _hash_password(password)
         self._db.update_user(user.id, hashed_password=password)

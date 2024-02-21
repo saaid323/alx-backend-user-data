@@ -20,8 +20,8 @@ def index():
 @app.route('/users', strict_slashes=False, methods=['POST'])
 def user():
     '''creating user'''
-    email = request.form.get('email')
-    password = request.form.get('password')
+    email = request.args.get('email')
+    password = request.args.get('password')
     try:
         user = AUTH.register_user(email, password)
     except ValueError:
@@ -32,8 +32,8 @@ def user():
 @app.route('/sessions', strict_slashes=False, methods=['POST'])
 def login():
     '''login function'''
-    email = request.form.get('email')
-    password = request.form.get('password')
+    email = request.args.get('email')
+    password = request.args.get('password')
     user = AUTH.valid_login(email, password)
     if not user:
         abort(401)
@@ -68,7 +68,7 @@ def profile():
 @app.route('/reset_password', strict_slashes=False, methods=['POST'])
 def get_reset_password_token():
     '''reset password token'''
-    email = request.form.get('email')
+    email = request.args.get('email')
     try:
         user = AUTH.get_reset_password_token(email)
     except ValueError:
@@ -79,9 +79,9 @@ def get_reset_password_token():
 @app.route('/reset_password', strict_slashes=False, methods=['PUT'])
 def update_password():
     '''update password'''
-    email = request.form.get('email')
-    password = request.form.get('new_password')
-    reset_token = request.form.get('reset_token')
+    email = request.args.get('email')
+    password = request.args.get('new_password')
+    reset_token = request.args.get('reset_token')
     try:
         user = AUTH.update_password(reset_token, password)
     except ValueError:

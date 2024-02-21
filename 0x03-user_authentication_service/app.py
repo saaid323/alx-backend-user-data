@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''flask app'''
-from flask import Flask, jsonify, request, abort, make_response
+from flask import (Flask, jsonify, request, abort, make_response, redirect,
+                   url_for)
 from auth import Auth
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
@@ -41,6 +42,17 @@ def login():
     res = make_response(res)
     res.set_cookie('session_id', session_id)
     return res
+
+
+@app.route('/sessions', strict_slashes=False, methods=['DELETE'])
+def logout():
+    '''logout function'''
+    cookie = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(cookie)
+    if user is None:
+        abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect(url_for('/'))
 
 
 if __name__ == '__main__':

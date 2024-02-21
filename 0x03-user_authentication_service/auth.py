@@ -86,5 +86,5 @@ class Auth:
             user = self._db.find_user_by(**info)
         except (NoResultFound, InvalidRequestError):
             raise ValueError
-        setattr(user, 'reset_token', _generate_uuid())
+        self._db.update_user(user, reset_token=_generate_uuid())
         return user.session_id

@@ -92,7 +92,7 @@ class Auth:
 
     def update_password(self, reset_token: str, password: str) -> None:
         '''update password'''
-        reset = {'reset_token' = reset_roken}
+        reset = {'reset_token': reset_roken}
         try:
             user = self._db.find_user_by(**info)
         except InvalidRequestError:

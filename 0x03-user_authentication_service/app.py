@@ -24,9 +24,9 @@ def user() -> str:
     password = request.args.get('password')
     try:
         AUTH.register_user(email, password)
+        return jsonify({f"email": email, "message": "user created"})
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
-    return jsonify({f"email": email, "message": "user created"})
 
 
 @app.route('/sessions', strict_slashes=False, methods=['POST'])

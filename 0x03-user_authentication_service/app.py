@@ -18,7 +18,7 @@ def index():
 
 
 @app.route('/users', strict_slashes=False, methods=['POST'])
-def user():
+def user() -> str:
     '''creating user'''
     email = request.args.get('email')
     password = request.args.get('password')
